@@ -1,0 +1,16 @@
+*{
+  padding: 0%;
+  margin: 0;
+  box-sizing: border-box;
+}
+.side-bar{
+  width: 25%;
+  min-height: 100vh;
+  background-color: #35525b;
+
+}
+@media(min-width: 992px) {
+  .side-bar {
+    width: 18%;
+  }
+}
