@@ -2,7 +2,7 @@ a.active{
     background-color: #062539;
     text-decoration: none;
     border-radius: 0.5rem;
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 1rem;
     color: #fff; 
     font-family: 'Mulish', sans-serif;
     font-weight: bold;
@@ -13,7 +13,7 @@ a.active{
 .inactive{
     text-decoration: none;
     border-radius: 0.5rem;
-    padding: 0.5rem 1.5rem;
+    padding: 0.5rem 1rem;
     color: #fff; 
    font-family: 'Mulish', sans-serif;
    font-weight: bold;

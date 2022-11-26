@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import SaveButton from "../../components/SaveButton";
 import CancelButton from "../../components/CancelButton";
 import Modal from "react-bootstrap/Modal";
@@ -10,19 +10,23 @@ import validate from "./validateNewDepartment";
 import { useDispatch,useSelector } from "react-redux";
 
 
-const CreateDepartment = ({show,onClose}) => {
+const EditDepartment = ({modal,onClose}) => {
   const departments = useSelector(state=>state.department.departments)
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-  const[departmentInfo,setDepartmentInfo] = useState({name:'',description:'',managingDeptId:null})
-  const [isTopManagement,setIsTopManagement] = useState(false)
-  useEffect(()=>{
-    setDepartmentInfo(prevValue=>{
-      return {...prevValue,managingDeptId:departments[0]?.id || 'ceo'}
-    })
-  },[departments])
+  const[departmentInfo,setDepartmentInfo] = useState({})
+  useEffect(() => {
+    const department = {
+      name: modal.department.name,
+      description: modal.department.description,
+      managingDeptId: modal.department.managingDeptId,
+    };
+    setDepartmentInfo(department);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [modal]);
   const changeHandler = (e) => {
     const { name, value } = e.target;
+    console.log(value)
     setDepartmentInfo((previousStates) => {
       return { ...previousStates, [name]: value };
     });
@@ -30,33 +34,22 @@ const CreateDepartment = ({show,onClose}) => {
       return { ...previousErrors, [name]: "" };
     });
   };
-
-  const checkChangeHandler = () =>{
-    setIsTopManagement(prevValue=>!prevValue)
-  }
-  const createNewDepartmentHandler = async () => {   
-    const errorValues = validate(departmentInfo);
-    setErrors(errorValues)
-    if(departments.length === 0 && !isTopManagement){
-      setErrors(prevValue=>{
-        return {...prevValue,check:'Please check the checkbox, because the first department is the top management'}
-      })
-    }
-    if (Object.values(errorValues).length === 0) {      
+  const editDepartmentHandler = async () => {
+    const errorValues =validate(departmentInfo)
+     setErrors(errorValues);
+    if (Object.values(errorValues).length === 0) {
       dispatch(buttonAction.setBtnSpiner(true));
       try {
-        let response = await apiCall.post("departments.json", JSON.stringify(departmentInfo));
+        let response = await apiCall.put(`departments/${modal.department.id}.json`,JSON.stringify(departmentInfo));
         if (response.status === 200) {
-        const newDepartment = {
-          id:response.data.name,
-          ...departmentInfo 
-        }         
-          dispatch(departmentAction.createDepartment(newDepartment));
+          dispatch(departmentAction.editDepartment({...response.data,id:modal.department.id}));
           handleClose();
         }
       } catch (err) {
       } finally {
         dispatch(buttonAction.setBtnSpiner(false));
+        
+        
       }
     }
   };
@@ -65,17 +58,17 @@ const CreateDepartment = ({show,onClose}) => {
     setErrors({});
     setDepartmentInfo({});
   };
-  console.log('departments=',departments)
   return (
+    <>
       <Modal
         size={"lg"}
-        show={show}
+        show={modal.show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create New Department</Modal.Title>
+          <Modal.Title>Edit Department </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form className="px-5">
@@ -101,47 +94,32 @@ const CreateDepartment = ({show,onClose}) => {
               />
               <span className="errorText">{errors.description}</span>
             </Form.Group>
-            {departments.length > 0 && (
-              <Form.Group className="mb-3" controlId="coldroomZone">
+            <Form.Group className="mb-3" controlId="coldroomZone">
               <Form.Label>Select Managing Department</Form.Label>
               <Form.Select
-              onChange={changeHandler}
               name='managingDeptId'
               value={departmentInfo.managingDeptId || ''}
+              onChange={changeHandler}
               className={errors.managingDeptId ?"errorBorder" : ""}
               >
               {
-                departments.map(department=>(<option key={department.id} value={department.managingDeptId}>{department.name}</option>))
+                departments.map(department=>(<option key={department.id} value={department.id}>{department.name}</option>))
               }
             
            </Form.Select>          
               <span className="errorText">{errors.managingDeptId}</span>
             </Form.Group>
-            )}
-            {
-              departments.length === 0 && (
-                <div>
-                <Form.Check
-                type="checkbox"
-                label="Use as top management"
-                id="topManagement"
-                onChange={checkChangeHandler}
-              />
-              <span className="errorText">{errors.check}</span>
-              </div>
-              )
-            }
            
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <CancelButton title={"Cancel"} onClose={handleClose} />         
-            <SaveButton title={"Save "} onSave={createNewDepartmentHandler} />
-         
+          <CancelButton title={"Cancel"} onClose={handleClose} />
+            <SaveButton title={"Save change"} onSave={editDepartmentHandler} />
+          
         </Modal.Footer>
       </Modal>
-    
+    </>
   );
 };
 
-export default CreateDepartment;
+export default EditDepartment;

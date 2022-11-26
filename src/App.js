@@ -13,7 +13,7 @@ function App() {
 <div className='fs-5 fw-bold ms-4 my-3'>Menues</div>
 <SideBar />
 </div>
-<div className='flex-fill p-3'>
+<div className='flex-fill p-3 p-lg-5'>
 <RoutePage />
 </div>
 </div>

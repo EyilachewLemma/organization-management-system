@@ -1,12 +1,37 @@
-import {Fragment} from 'react'
+import {Fragment,useState} from 'react'
 import SideBarItem from "../components/SideBarItem";
+import classes from './SideBar.module.css'
 const SideBar = () =>{
+    const [open,setOpen] = useState(false)
+    const toggle = () =>{
+        setOpen(prevState=>!prevState)
+    }
 return (
     <Fragment>
-    <SideBarItem label="Dashboard" to="/" icon="fas fa-th-large" />
-    <SideBarItem label="Departments" to="/departments" icon="fas fa-th-large" />
-    <SideBarItem label="Reports" to="/reports" icon="fas fa-th-large" />
-    <SideBarItem label="About As" to="/about-as" icon="fas fa-th-large" />
+    <SideBarItem label="Dashboard" to="/" icon="fas fa-th-large" dropdown='' />
+    <SideBarItem label="Departments" to="/departments" icon="fas fa-th-large" dropdown='' />
+   <div className={`${open?classes.accordion:''} rounded-3 p-2`}>
+   <div onClick={toggle}>
+   <SideBarItem label="Reports" to="b" icon="fas fa-th-large" dropdown='+' />
+
+   </div>
+   {
+    open && (
+        <div>
+        <SideBarItem label="Sent Report" to="/sent-reports" icon="" dropdown='' />
+        <SideBarItem label="Received Report" to="/recieved-reports" icon='' dropdown={open?"fas fa-chevron-up":"fas fa-chevron-down"} />
+        </div>  
+    )}
+   </div>
+    <SideBarItem label="About As" to="/about-as" icon="fas fa-th-large" dropdown='' />
+    <div>
+
+
+
+
+
+    </div>
+  
 </Fragment>
 )
 }

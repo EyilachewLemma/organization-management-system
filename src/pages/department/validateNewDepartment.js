@@ -9,9 +9,6 @@ export default function validate(values){
     if(!values.description?.trim()){
         errors.description = 'short description is required !'
     }
-   if(!values.managingDeptId){
-    errors.managingDeptId = 'please select managing department'
-   }
    
     return errors
 }

@@ -26,6 +26,7 @@
     font-family: 'Mulish', sans-serif;
     font-weight: bold;
     font-size: small;
+    cursor: pointer;
 }
 .dropdownBg{
     background-color: rgb(205, 210, 214)!important;
