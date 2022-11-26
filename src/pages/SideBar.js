@@ -8,11 +8,12 @@ const SideBar = () =>{
     }
 return (
     <Fragment>
+    <div className='fs-5 fw-bold ms-4 my-3 text-white'>Menues</div>
     <SideBarItem label="Dashboard" to="/" icon="fas fa-th-large" dropdown='' />
     <SideBarItem label="Departments" to="/departments" icon="fas fa-th-large" dropdown='' />
    <div className={`${open?classes.accordion:''} rounded-3 p-2`}>
    <div onClick={toggle}>
-   <SideBarItem label="Reports" to="b" icon="fas fa-th-large" dropdown='+' />
+   <SideBarItem label="Reports" to="" icon="fas fa-th-large" dropdown='+' />
 
    </div>
    {

@@ -20,7 +20,9 @@ const CreateDepartment = ({show,onClose}) => {
     setDepartmentInfo(prevValue=>{
       return {...prevValue,managingDeptId:departments[0]?.id || 'ceo'}
     })
-  },[departments])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
   const changeHandler = (e) => {
     const { name, value } = e.target;
     setDepartmentInfo((previousStates) => {

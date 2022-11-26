@@ -3,7 +3,7 @@
   margin: 0;
   box-sizing: border-box;
 }
-.side-bar{
+.sideBar{
  min-width: 25%;
  max-width: 25%;
   min-height: 100vh;
@@ -20,7 +20,7 @@
   background-color: red!important;
 }
 @media(min-width: 992px) {
-  .side-bar {
+  .sideBar{
     min-width: 18%;
     max-width: 18%;
   }

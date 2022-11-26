@@ -1,45 +1,54 @@
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef,useState } from "react";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
-import { departmentAction } from "../../store/slices/DepartmentSlice";
-import { useDispatch,useSelector } from "react-redux";
-import apiClient from "../../url/index";
+import apiCall from "../../url/index";
 import classes from "./Reports.module.css";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const SentReports = () => {
-  const departments = useSelector(state=>state.department.departments)
+const SentReportList = () => {
+    const userInfo = useSelector(state=>state.user.userInfo)
+  const [reports,setReports] = useState([])
   const componentRef = useRef();
-  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const featchDepartments = async () => {
+  const featchSentReports = async () => {
     try {
-      var response = await apiClient.get(`departments.json`);
+      var response = await apiCall.get(`reports.json`);
       if (response.status === 200) {
         // transforming the retrived data to aproprate format
         const responseData = [];
         for (let key in response.data) {
+            if(response.data[key].sentFrom === userInfo.departmentId){
           responseData.push({
             id: key,
-            name: response.data[key].name,
-            description: response.data[key].description,
-            managingDeptId: response.data[key].managingDeptId,
+            title: response.data[key].title,
+            sentDate: response.data[key].sentDate,
+            sentTo: response.data[key].sentTo,
+            data:response.data[key].data
           });
         }
-        dispatch(departmentAction.setDepartments(responseData));
+        }
+        setReports(responseData)
       }
     } catch (err) {
     } finally {
     }
   };
   useEffect(() => {
-    featchDepartments();
+    featchSentReports();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const writeNewReport = () =>{}
+  }, [userInfo]);
+  const writeNewReport = () =>{
+    navigate('/sent-reports/write')
+  }
+  const readReportHandler = (id) =>{
+    navigate(`/sent-reports/${id}`)
+  }
   return (
     <Fragment>
-      <h5 className="text-bold">Sent Reports</h5>
+    <button onClick={()=>navigate(-1)} style={{background:"none",border:"none",fontSize:"2rem"}}><i className="fas fa-arrow-left"></i></button> 
+      <h5 className="text-bold mt-3">Sent Reports</h5>
       <p className={`${classes.titleP} fw-bold small`}>
         In the cold room section you can review and manage all cold rooms with
         their detail.You can view and edit many information such as cold room
@@ -57,22 +66,25 @@ const SentReports = () => {
       </div>
     </div>
       <div className={classes.bottomBorder}></div>
-      {departments.length > 0 && (
+      {reports.length > 0 && (
         <div className="mt-4" ref={componentRef}>
           <Table responsive="md" hover>
             <thead className={classes.header}>
               <tr>
                 <th>NO</th>
+                <th>Report Title</th>
                 <th>Sent To</th>
                 <th>Sent Date</th>
               </tr>
             </thead>
             <tbody>
-              {departments?.map((department, index) => (
-                <tr className={classes.row} key={department.id}>
+              {reports?.map((report, index) => (
+                <tr className={classes.row} key={report.id} onClick={()=>readReportHandler(report.id)}>
                 <td className="p-4">{index+1}</td>
-                  <td className="p-4">09-12-2022</td>
-                  <td className="p-4">ICT Office</td>
+                <td className="p-4">{report.title}</td>
+                <td className="p-4">{report.sentTo}</td>
+                  <td className="p-4">{report.sentDate.slice(0,10)}</td>
+                  
                  
                 </tr>
               ))}
@@ -80,11 +92,11 @@ const SentReports = () => {
           </Table>
         </div>
       )}
-      {departments.length === 0 && (
+      {reports.length === 0 && (
         <div className="mt-5 text-center">No data found</div>
       )}
       
     </Fragment>
   );
 };
-export default SentReports;
+export default SentReportList;

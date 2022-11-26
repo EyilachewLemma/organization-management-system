@@ -1,13 +1,11 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import CreateDepartment from "./CreateDepartment";
 import EditDepartment from './EditDepartment'
-import { departmentAction } from "../../store/slices/DepartmentSlice";
-import { useDispatch,useSelector } from "react-redux";
-import apiClient from "../../url/index";
+import { useSelector } from "react-redux";
 import classes from "./Departments.module.css";
 
 const DepartmentList = () => {
@@ -19,33 +17,7 @@ const DepartmentList = () => {
   const [showCreatModal,setShowCreatModal] = useState(false)
   const componentRef = useRef();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const featchDepartments = async () => {
-    try {
-      var response = await apiClient.get(`departments.json`);
-      if (response.status === 200) {
-        // transforming the retrived data to aproprate format
-        const responseData = [];
-        for (let key in response.data) {
-          responseData.push({
-            id: key,
-            name: response.data[key].name,
-            description: response.data[key].description,
-            managingDeptId: response.data[key].managingDeptId,
-          });
-        }
-        dispatch(departmentAction.setDepartments(responseData));
-      }
-    } catch (err) {
-    } finally {
-    }
-  };
-  useEffect(() => {
-    featchDepartments();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  
 
   const openCreateDepartmentModal = () => {
     setShowCreatModal(true)

@@ -1,14 +1,21 @@
 import React, {Fragment} from 'react'
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { NavLink } from 'react-router-dom';
-// import profileImage from '../assetes/eyilachew.jpg'
-
+import { NavLink, useNavigate } from 'react-router-dom';
+import { userAction } from '../store/slices/UserSlice';
+import { useDispatch } from 'react-redux';
 import classes from './TheHeader.module.css'
 
 const TheHeader = () =>{ 
- 
-  const logoutHandler = () =>{}
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+
+  const logoutHandler = () =>{    
+    dispatch(userAction.setToken(null));
+    dispatch(userAction.setIsAuthenticated(false));
+    navigate('/login')
+  }
   const changePasswordHandler = () =>{
   } 
   const openNotification = () =>{
@@ -32,7 +39,6 @@ const TheHeader = () =>{
         <div className='d-flex overflow-hidden ms-2 align-items-center'>
         <div className='fs-2'><i className="far fa-user"></i></div>
     { 
-      //  <img src={profileImage} alt={'profile_photo'} className={classes.profileImg+' img-fluid rounded-circle'} />
       }
          <div className='text-white me-2'>
            <div className='fw-bold ms-2 mt-2'>Alemayehu Belay</div>

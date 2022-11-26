@@ -1,6 +1,6 @@
 
 import { Outlet } from "react-router-dom"
-const Departments = () =>{
+const SentReports = () =>{
    return <Outlet />
 }
-export default Departments
+export default SentReports
