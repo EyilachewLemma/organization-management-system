@@ -5,15 +5,18 @@ import apiCall from "../../url/index";
 import classes from "./Reports.module.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { isLoadingAction } from '../../store/slices/LoadingSpiner';
+import { useDispatch } from "react-redux";
 
 const SentReportList = () => {
     const userInfo = useSelector(state=>state.user.userInfo)
   const [reports,setReports] = useState([])
   const componentRef = useRef();
   const navigate = useNavigate()
-
+const dispatch = useDispatch()
   const featchSentReports = async () => {
     try {
+      dispatch(isLoadingAction.setIsLoading(true))
       var response = await apiCall.get(`reports.json`);
       if (response.status === 200) {
         // transforming the retrived data to aproprate format
@@ -33,6 +36,7 @@ const SentReportList = () => {
       }
     } catch (err) {
     } finally {
+      dispatch(isLoadingAction.setIsLoading(false))
     }
   };
   useEffect(() => {

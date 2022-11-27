@@ -1,7 +1,8 @@
 import { Fragment, useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
 import apiCall from "../../url/index";
-
+import { isLoadingAction } from '../../store/slices/LoadingSpiner';
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -10,9 +11,11 @@ const ReadReport = () => {
   const [report,setReport] = useState({})
   const {id} = useParams()
   const navigate = useNavigate()
+  const dispatch=useDispatch()
 
   const featchSentReports = async () => {
     try {
+      dispatch(isLoadingAction.setIsLoading(true))
       var response = await apiCall.get(`reports.json`);
       if (response.status === 200) {
         // transforming the retrived data to aproprate format
@@ -33,6 +36,7 @@ const ReadReport = () => {
       }
     } catch (err) {
     } finally {
+      dispatch(isLoadingAction.setIsLoading(false))
     }
   };
   useEffect(() => {

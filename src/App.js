@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Spiner from './Spinner';
 import Router from './routes';
 import { userAction } from './store/slices/UserSlice';
+import { isLoadingAction } from './store/slices/LoadingSpiner';
 import { departmentAction } from './store/slices/DepartmentSlice';
 import apiCall from './url';
 import './App.css';
@@ -15,6 +16,7 @@ function App() {
 
   const featchDepartments = async () => {
     try {
+      dispatch(isLoadingAction.setIsLoading(true))
       var response = await apiCall.get(`departments.json`);
       if (response.status === 200) {
         // transforming the retrived data to aproprate format
@@ -35,6 +37,7 @@ function App() {
     } catch (err) {
     } finally {
     }
+    dispatch(isLoadingAction.setIsLoading(false))
   };
   useEffect(()=>{
     featchDepartments()
