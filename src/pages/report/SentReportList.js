@@ -50,10 +50,8 @@ const SentReportList = () => {
     <button onClick={()=>navigate(-1)} style={{background:"none",border:"none",fontSize:"2rem"}}><i className="fas fa-arrow-left"></i></button> 
       <h5 className="text-bold mt-3">Sent Reports</h5>
       <p className={`${classes.titleP} fw-bold small`}>
-        In the cold room section you can review and manage all cold rooms with
-        their detail.You can view and edit many information such as cold room
-        name, region, zone,woreda,kebele and rent fee. You can also add new cold
-        room
+        In the Sent Report  section you can review all reports you sent to yor super managing departments.
+        You can also write and send new report
       </p>
       <div className="d-flex my-3">
       <div className="ms-auto">

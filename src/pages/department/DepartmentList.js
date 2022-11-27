@@ -42,10 +42,8 @@ const DepartmentList = () => {
     <Fragment>
       <h5 className="text-bold">Department List</h5>
       <p className={`${classes.titleP} fw-bold small`}>
-        In the cold room section you can review and manage all cold rooms with
-        their detail.You can view and edit many information such as cold room
-        name, region, zone,woreda,kebele and rent fee. You can also add new cold
-        room
+        In the Department List section you can View and manage departments with
+        their detail.You can create new Department,edit existing department information.
       </p>
       <div className="d-flex my-3">
         <div className="ms-auto">
@@ -76,7 +74,7 @@ const DepartmentList = () => {
                 <tr className={classes.row} key={department.id}>
                   <td className="p-2">{index + 1}</td>
                   <td className="p-2">{department.name}</td>
-                  <td className="p-2">Unassignd</td>
+                  <td className="p-2">{department.id}</td>
                   <td className="p-2">{department.managingDeptId}</td>
                   <td className="p-2 text-center">12</td>
                   <td className="p-2 onPrintDnone">

@@ -43,8 +43,10 @@ const ReadReport = () => {
     <Fragment>  
     <button onClick={()=>navigate(-1)} style={{background:"none",border:"none",fontSize:"2rem"}}><i className="fas fa-arrow-left"></i></button> 
     <div className="mt-4">
-    <div dangerouslySetInnerHTML={{ __html: report.data }}>
-    </div>
+    <div>Title Of the Report:<span className="fw-bold">{report.title}</span></div>
+    <div className="mt-3">Description of the report</div>
+    <p dangerouslySetInnerHTML={{ __html: report.data }}>
+    </p>
     </div>    
     </Fragment>
 

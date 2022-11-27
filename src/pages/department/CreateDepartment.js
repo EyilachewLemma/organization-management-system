@@ -14,7 +14,7 @@ const CreateDepartment = ({show,onClose}) => {
   const departments = useSelector(state=>state.department.departments)
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
-  const[departmentInfo,setDepartmentInfo] = useState({name:'',description:'',managingDeptId:null})
+  const[departmentInfo,setDepartmentInfo] = useState({name:'',description:'',managingDeptId:''})
   const [isTopManagement,setIsTopManagement] = useState(false)
   useEffect(()=>{
     setDepartmentInfo(prevValue=>{
@@ -113,7 +113,7 @@ const CreateDepartment = ({show,onClose}) => {
               className={errors.managingDeptId ?"errorBorder" : ""}
               >
               {
-                departments.map(department=>(<option key={department.id} value={department.managingDeptId}>{department.name}</option>))
+                departments.map(department=>(<option key={department.id} value={department.id}>{department.name}</option>))
               }
             
            </Form.Select>          
