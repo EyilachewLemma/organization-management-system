@@ -30,7 +30,7 @@ const DepartmentList = () => {
     });
   };
   const viewDetailHandler = (deptId) => {
-    navigate(`/departments/${deptId}`);
+    navigate(`/${deptId}`);
   };
   const closeCreateDepartmentModalHandler = () => {
     setShowCreatModal(false)
