@@ -14,6 +14,8 @@ const TheHeader = () =>{
   const logoutHandler = () =>{    
     dispatch(userAction.setToken(null));
     dispatch(userAction.setIsAuthenticated(false));
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
     navigate('/login')
   }
   const changePasswordHandler = () =>{
@@ -47,9 +49,6 @@ const TheHeader = () =>{
          </div>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item>
-            <Button className={classes.profileBtn+' text-dark'} onClick={changePasswordHandler}>Change Password</Button>            
-            </Dropdown.Item>
           <Dropdown.Item>
           <Button className={classes.profileBtn+' text-dark'} onClick={logoutHandler}>Logout</Button>            
           </Dropdown.Item>
