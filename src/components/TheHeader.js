@@ -18,8 +18,6 @@ const TheHeader = () =>{
     localStorage.removeItem('user')
     navigate('/login')
   }
-  const changePasswordHandler = () =>{
-  } 
   const openNotification = () =>{
     
   } 

@@ -1,5 +1,5 @@
 a.active{
-    background-color: #062539;
+    background-color: #ff7e00;
     text-decoration: none;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
@@ -18,4 +18,8 @@ a.active{
    font-family: 'Mulish', sans-serif;
    font-weight: bold;
    font-size: large;
+}
+
+li{
+    list-style-type:none
 }

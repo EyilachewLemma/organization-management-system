@@ -10,7 +10,7 @@ const AppContainer = () =>{
     return <Fragment>
         <TheHeader />
         <div className='d-flex'>
-         <div className='sideBar'>
+         <div className='sideBar px-3'>
          <SideBar />
          </div>
         <div className='flex-fill px-3 px-lg-5 py-4 mb-4'>     

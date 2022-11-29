@@ -1,7 +1,6 @@
 import { Fragment,useEffect,useState } from "react"
 import { useParams,useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
-import apiCall from "../../url"
 import classes from './Departments.module.css'
 const Department =() =>{
     const [department,setDepartment] = useState({})
@@ -11,19 +10,19 @@ const Department =() =>{
     const navigate = useNavigate()
     const {deptId} = useParams()
 
-   const fetchDepartment = async ()=>{
-     try{
-        const response = await apiCall.get(`departments/${deptId}.json`)
-        if(response.status === 200){
-            setDepartment(response.data)
+   const fetchDepartment =  ()=>{
+     
+           const dept = departments.find(dep=>dep.id === deptId )
+           console.log('department',dept)
+            setDepartment(dept)
+
         }
-     }
-     catch(err){}
-   }
+     
+   
     useEffect(()=>{
         fetchDepartment()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[deptId,departments])
     const fetchManagingDepartment = () =>{
       const managingDept = departments.find(dept =>department.managingDeptId === dept.id)
       if(managingDept){
@@ -37,9 +36,6 @@ const Department =() =>{
         })
          setLowerLevelDepartment(lowerDept)
             }
-            console.log('deptId',deptId)
-    console.log('managingDepartment',managingDepartment)
-    console.log('lowerLevelDepartment',lowerLevelDepartment)
     return <Fragment>
     <button onClick={()=>navigate(-1)} style={{background:"none",border:"none",fontSize:"2rem"}}><i className="fas fa-arrow-left"></i></button> 
     <div className="fw-bold fs-5 text-center">Detail Description of {department?.name} Department</div>

@@ -19,7 +19,7 @@ const EditDepartment = ({modal,onClose}) => {
     const department = {
       name: modal.department.name,
       description: modal.department.description,
-      managingDeptId: modal.department.managingDeptId,
+      managingDeptId: modal.department.managingDeptId || 'ceo',
     };
     setDepartmentInfo(department);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,6 +102,7 @@ const EditDepartment = ({modal,onClose}) => {
               onChange={changeHandler}
               className={errors.managingDeptId ?"errorBorder" : ""}
               >
+              <option value="ceo">Top Management</option>
               {
                 departments.map(department=>(<option key={department.id} value={department.id}>{department.name}</option>))
               }

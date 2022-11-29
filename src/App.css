@@ -7,7 +7,8 @@
  min-width: 25%;
  max-width: 25%;
   min-height: 100vh;
-  background-color: #35525b;
+  background-color: #062539;
+  border-right: 0.15rem solid rgb(180, 175, 175);
 
 }
 .errorBorder{
@@ -16,12 +17,9 @@
 .errorText{
   color: red!important;
 }
-.accordion{
-  background-color: red!important;
-}
 @media(min-width: 992px) {
   .sideBar{
-    min-width: 18%;
-    max-width: 18%;
+    min-width: 20%;
+    max-width: 20%;
   }
 }

@@ -1,7 +1,5 @@
 import { Fragment, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 import CreateDepartment from "./CreateDepartment";
 import EditDepartment from './EditDepartment'
@@ -16,7 +14,6 @@ const DepartmentList = () => {
   });
   const [showCreatModal,setShowCreatModal] = useState(false)
   const componentRef = useRef();
-  const navigate = useNavigate();
   
 
   const openCreateDepartmentModal = () => {
@@ -28,9 +25,6 @@ const DepartmentList = () => {
       show: true,
       department: dept,
     });
-  };
-  const viewDetailHandler = (deptId) => {
-    navigate(`/${deptId}`);
   };
   const closeCreateDepartmentModalHandler = () => {
     setShowCreatModal(false)
@@ -77,29 +71,14 @@ const DepartmentList = () => {
                   <td className="p-2">{department.id}</td>
                   <td className="p-2">{department.managingDeptId}</td>
                   <td className="p-2 text-center">12</td>
-                  <td className="p-2 onPrintDnone">
-                    <Dropdown>
-                      <Dropdown.Toggle variant="none" id="dropdown-basic">
-                        <i className="fas fa-ellipsis-v"></i>
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu className={classes.dropdownBg}>
+                  <td className="p-2 onPrintDnone">             
                         <Button
                           variant="none"
-                          className={`${classes.dropdownItem} border-bottom w-100 rounded-0 text-start ps-3`}
-                          onClick={() => viewDetailHandler(department.id)}
-                        >
-                          View Detail
-                        </Button>
-                        <Button
-                          variant="none"
-                          className={`${classes.dropdownItem} border-bottom w-100 rounded-0 text-start ps-3`}
+                          className={`${classes.dropdownItem} w-100 rounded-0 text-start fs-5 ps-3`}
                           onClick={() => openEditDepartmentModal(department)}
                         >
-                          Edit Department
+                        <i className="fas fa-edit"></i>
                         </Button>
-                      </Dropdown.Menu>
-                    </Dropdown>
                   </td>
                 </tr>
               ))}
